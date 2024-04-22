@@ -28,26 +28,28 @@ const columns: TableProps<DataType>['columns'] = [
     title: '기술등급',
     key: 'skGrade',
     dataIndex: 'skGrade',
-    render: ({color}, { skGrade }) => (
+    render: (_, { skGrade }) => (
       <>
-        let {color} = '';
-        if(skGrade === '초급') {
-          color = 'green'
-        }
-        else if(skGrade === '중급') {
-          color = 'geekblue'
-        }
-        else if(skGrade === '고급') {
-          color = 'gold'
-        }
-        else if(skGrade === '특급') {
-          color = 'magenta'
-        }
-        return (
-          <Tag color={color} key={skGrade}>
-            {skGrade}
-          </Tag>
-        );
+        {()=>{
+          let color = '';
+          if(skGrade === '초급') {
+            color = 'green';
+          }
+          else if(skGrade === '중급') {
+            color = 'geekblue';
+          }
+          else if(skGrade === '고급') {
+            color = 'gold';
+          }
+          else if(skGrade === '특급') {
+            color = 'magenta';
+          }
+          return (
+            <Tag color={color} key={skGrade}>
+              {skGrade}
+            </Tag>
+          );
+        }}
       </>
     ),
   },
