@@ -1,11 +1,11 @@
 import SearchBox from './components/SearchBox'
-import Table from './components/Table'
+import CustomTable from './components/CustomTable'
 
 function App3() {
   return (
     <>
       <SearchBox />
-      <Table />
+      <CustomTable />
     </>
   );
 };
