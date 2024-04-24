@@ -25,16 +25,17 @@ function getSysdateObject() {
 /** *****************************
  * 입력한 날짜를 객체로 받음
  * 
- * @param {string} iDate 날짜(YYYYMMDD)
+ * @param {string} input 날짜(YYYYMMDD)
  * @return {object} Number object : {year, month, date}
  -------------------------------
  사용예시.
  getDate("19991231").year -> 1999
  ******************************* */ 
- function getDateObject(iDate) {
-   let year  = iDate.slice(0, 4);
-   let month = iDate.slice(4, 6);
-   let date  = iDate.slice(6, 8);
+ function getDateObject(input) {
+   const cDate = input;
+   let year  = cDate.slice(0, 4);
+   let month = cDate.slice(4, 6);
+   let date  = cDate.slice(6, 8);
 
    return ({year, month, date});
 }

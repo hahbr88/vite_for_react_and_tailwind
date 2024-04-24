@@ -15,7 +15,7 @@ interface DataType {
 }
 
 // Arrow Function의 매개변수 <-- DataType 객체를 구조 분해 할당한 변수
-const CustomTag = ({ skGrade }) => {
+function CustomTag({skGrade}) {
   const [color, setColor] = useState("");
   useEffect(() => {
     if (skGrade === "초급") {
@@ -35,6 +35,27 @@ const CustomTag = ({ skGrade }) => {
   );
 };
 
+function CustomBirth({birth}) {
+  const [contents, setContents] = useState("");
+
+  if(stringUtil.isEmpty(birth)) {
+    setContents(() => "-");
+  } else {
+    setContents(() => {
+      // 오늘 날짜 구하기
+      const todayObj = dateUtil.getSysdateObject();
+      const todayStr = Object.values(todayObj);
+      // 만 나이 구하기
+      const age = dateUtil.calcAgeBirth(birth, todayStr);
+      const result = dateUtil.getFormattedDate(birth, ".");
+
+      return (`"${result}(만${age}세)"`);
+    });
+  }
+
+  return (<p>{contents}</p>);
+}
+
 // 테이블의 컬럼 정의(by. antd Table Component)
 // - ["column"] : 테이블의 열을 나타내며, "이름"과 "키" 등의 속성을 가짐
 // column 정의
@@ -53,29 +74,13 @@ const columns: TableProps<DataType>["columns"] = [
     title:     "생년월일",
     dataIndex: "birth",
     key:       "birth",
-    render: (birth) => {
-      if(stringUtil.isEmpty(birth)) {
-        return (<p>-</p>);
-      }
-
-      // 오늘 날짜 구하기
-      const todayObject = dateUtil.getSysdateObject();
-      const todayStr = Object.values(todayObject);
-      
-      // 만 나이 구하기
-      const age = dateUtil.calcAgeBirth(birth, todayStr);
-
-      // 데이터바인딩
-      const result = dateUtil.getFormattedDate(birth, ".");
-
-      return (<p>{result}(만{age}세)</p>);
-    },
+    render: ( text ) => <CustomBirth birth={text} />,
   },
   {
     title:     "기술등급",
     dataIndex: "skGrade",
     key:       "skGrade",
-    render: ( skGrade ) => <CustomTag skGrade={skGrade} />,
+    render: ( text ) => <CustomTag skGrade={text} />,
   },
   {
     title:     "주역할",

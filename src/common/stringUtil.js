@@ -3,14 +3,14 @@ export default {};
 /** *****************************
  * 데이터를 trim()한 뒤, 빈 값인지 확인
  * 
- * @param {string} data string
+ * @param {string} input string
  * @return {boolean}
  -------------------------------
  사용예시.
  isEmpty("") -> true
  ******************************* */ 
-function isEmpty(data) {
-   data = data.trim();
+function isEmpty(input) {
+   const data = input.trim();
    let check = (data == "" || data == null || data == undefined)? true : false;
 
    return check;
