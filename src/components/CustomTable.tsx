@@ -35,6 +35,21 @@ function CustomTag({ skGrade }) {
   );
 }
 
+const calcAgeColumns = (birth) => {
+  if(stringUtil.isEmpty(birth)) {
+    return "-";
+  }
+  // 오늘 날짜 구하기
+  const todayObj = dateUtil.getSysdateObject();
+  const todayStr = String(Object.values(todayObj));
+  // 만 나이 구하기
+  const age = dateUtil.calcAgeBirth(birth, todayStr);
+  const result = dateUtil.getFormattedDate(birth, ".");
+
+  return `${result} (만${age}세)`;
+};
+
+/*
 const ageCalculator = (date) => {
   const birthStr = dateUtil.getFormattedDate(date, "-");
   const now = new Date();
@@ -45,6 +60,7 @@ const ageCalculator = (date) => {
 
   return `${birthStr} 만${age}세`;
 };
+*/
 
 // 테이블의 컬럼 정의(by. antd Table Component)
 // - ["column"] : 테이블의 열을 나타내며, "이름"과 "키" 등의 속성을 가짐
@@ -64,7 +80,7 @@ const columns: TableProps<DataType>["columns"] = [
     title: "생년월일",
     dataIndex: "birth",
     key: "birth",
-    render: (text) => ageCalculator(text),
+    render: (text) => calcAgeColumns(text),
   },
   {
     title: "기술등급",
