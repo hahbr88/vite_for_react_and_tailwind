@@ -5,17 +5,17 @@ import dateUtil from "../common/dateUtil";
 import stringUtil from "../common/stringUtil";
 
 interface DataType {
-  key:     number;
-  name:    string; //이름     : 홍길동
-  birth:   string; //생년월일 : 1999.01.01(만25세)
+  key: number;
+  name: string; //이름     : 홍길동
+  birth: string; //생년월일 : 1999.01.01(만25세)
   skGrade: string; //기술등급 : 특급
-  role:    string; //주역할   : 개발
-  skill:   string; //사용기술 : Java, C, ProC, 웹스퀘어
+  role: string; //주역할   : 개발
+  skill: string; //사용기술 : Java, C, ProC, 웹스퀘어
   updInfo: string; //최종수정 : 홍길동/2024.04.22
 }
 
 // Arrow Function의 매개변수 <-- DataType 객체를 구조 분해 할당한 변수
-function CustomTag({skGrade}) {
+function CustomTag({ skGrade }) {
   const [color, setColor] = useState("");
   useEffect(() => {
     if (skGrade === "초급") {
@@ -33,28 +33,18 @@ function CustomTag({skGrade}) {
       {skGrade}
     </Tag>
   );
-};
-
-function CustomBirth({birth}) {
-  const [contents, setContents] = useState("");
-
-  if(stringUtil.isEmpty(birth)) {
-    setContents(() => "-");
-  } else {
-    setContents(() => {
-      // 오늘 날짜 구하기
-      const todayObj = dateUtil.getSysdateObject();
-      const todayStr = Object.values(todayObj);
-      // 만 나이 구하기
-      const age = dateUtil.calcAgeBirth(birth, todayStr);
-      const result = dateUtil.getFormattedDate(birth, ".");
-
-      return (`"${result}(만${age}세)"`);
-    });
-  }
-
-  return (<p>{contents}</p>);
 }
+
+const ageCalculator = (date) => {
+  const birthStr = dateUtil.getFormattedDate(date, "-");
+  const now = new Date();
+  const nowDate = `${now.getFullYear()}${
+    now.getMonth() + 1 > 10 ? now.getMonth() + 1 : `0${now.getMonth() + 1}`
+  }${now.getDate()}`;
+  const age = dateUtil.calcAgeBirth(date, nowDate);
+
+  return `${birthStr} 만${age}세`;
+};
 
 // 테이블의 컬럼 정의(by. antd Table Component)
 // - ["column"] : 테이블의 열을 나타내며, "이름"과 "키" 등의 속성을 가짐
@@ -65,44 +55,46 @@ function CustomBirth({birth}) {
 // - render: 열 데이터를 어떻게 렌더링할지를 정의
 const columns: TableProps<DataType>["columns"] = [
   {
-    title:     "이름",
+    title: "이름",
     dataIndex: "name",
-    key:       "name",
+    key: "name",
     //render: (text) => <a>{text}</a>,
   },
   {
-    title:     "생년월일",
+    title: "생년월일",
     dataIndex: "birth",
-    key:       "birth",
-    render: ( text ) => <CustomBirth birth={text} />,
+    key: "birth",
+    render: (text) => ageCalculator(text),
   },
   {
-    title:     "기술등급",
+    title: "기술등급",
     dataIndex: "skGrade",
-    key:       "skGrade",
-    render: ( text ) => <CustomTag skGrade={text} />,
+    key: "skGrade",
+    render: (text) => <CustomTag skGrade={text} />,
   },
   {
-    title:     "주역할",
+    title: "주역할",
     dataIndex: "role",
-    key:       "role",
+    key: "role",
   },
   {
-    title:     "사용기술",
+    title: "사용기술",
     dataIndex: "skill",
-    key:       "skill",
+    key: "skill",
   },
   {
-    title:     "최종수정",
+    title: "최종수정",
     dataIndex: "updInfo",
-    key:       "updInfo",
+    key: "updInfo",
   },
   {
-    title:     "",
-    key:       "updInfo",
-    render: (text, record, index) => ( // (_) : 자리 표시자 변수(사용되지 않는 매개변수 나타냄)
-      <div>asd</div>
-    ),
+    title: "",
+    key: "updInfo",
+    render: (
+      text,
+      record,
+      index // (_) : 자리 표시자 변수(사용되지 않는 매개변수 나타냄)
+    ) => <div>asd</div>,
     // render: function(text, record, index) => {}
     // - text: 데이터
     // - record: 전체 행 데이터
@@ -125,70 +117,75 @@ const columns: TableProps<DataType>["columns"] = [
 // 실제 데이터
 const data: DataType[] = [
   {
-    key:     1,
-    name:    "최진희",
-    birth:   "19990101",
+    key: 1,
+    name: "최진희",
+    birth: "19990101",
     skGrade: "특급",
-    role:    "개발",
-    skill:   "Java, C, ProC, 웹스퀘어, JQuery, Oracle, mySQL, IBM DB2, Spring, BMX",
+    role: "개발",
+    skill:
+      "Java, C, ProC, 웹스퀘어, JQuery, Oracle, mySQL, IBM DB2, Spring, BMX",
     updInfo: "홍길동/2024.04.22",
   },
   {
-    key:     2,
-    name:    "김민경",
-    birth:   "19990101",
+    key: 2,
+    name: "김민경",
+    birth: "19990101",
     skGrade: "특급",
-    role:    "개발",
-    skill:   "Java, C, ProC, 웹스퀘어, JQuery, Oracle, mySQL, IBM DB2, Spring, BMX",
+    role: "개발",
+    skill:
+      "Java, C, ProC, 웹스퀘어, JQuery, Oracle, mySQL, IBM DB2, Spring, BMX",
     updInfo: "홍길동/2024.04.22",
   },
   {
-    key:     3,
-    name:    "이의용",
-    birth:   "19990101",
+    key: 3,
+    name: "이의용",
+    birth: "19990101",
     skGrade: "특급",
-    role:    "PL",
-    skill:   "Java, C, ProC, 웹스퀘어, JQuery, Oracle, mySQL, IBM DB2, Spring, BMX",
+    role: "PL",
+    skill:
+      "Java, C, ProC, 웹스퀘어, JQuery, Oracle, mySQL, IBM DB2, Spring, BMX",
     updInfo: "홍길동/2024.04.22",
   },
   {
-    key:     4,
-    name:    "홍길동",
-    birth:   "19990101",
+    key: 4,
+    name: "홍길동",
+    birth: "19990101",
     skGrade: "초급",
-    role:    "테스터",
-    skill:   "Java, Oracle, Spring, BMX",
+    role: "테스터",
+    skill: "Java, Oracle, Spring, BMX",
     updInfo: "홍길동/2024.04.22",
   },
   {
-    key:     5,
-    name:    "박경진",
-    birth:   "19990101",
+    key: 5,
+    name: "박경진",
+    birth: "19990101",
     skGrade: "중급",
-    role:    "개발",
-    skill:   "Java, Oracle, Spring, BMX",
+    role: "개발",
+    skill: "Java, Oracle, Spring, BMX",
     updInfo: "홍길동/2024.04.22",
   },
   {
-    key:     6,
-    name:    "이승원",
-    birth:   "19990101",
+    key: 6,
+    name: "이승원",
+    birth: "19990101",
     skGrade: "중급",
-    role:    "개발",
-    skill:   "Java, Oracle, Spring, BMX",
+    role: "개발",
+    skill: "Java, Oracle, Spring, BMX",
     updInfo: "홍길동/2024.04.22",
   },
   {
-    key:     7,
-    name:    "김영범",
-    birth:   "19990101",
+    key: 7,
+    name: "김영범",
+    birth: "19990101",
     skGrade: "고급",
-    role:    "PM",
-    skill:   "Java, Oracle, Spring, BMX",
+    role: "PM",
+    skill: "Java, Oracle, Spring, BMX",
     updInfo: "홍길동/2024.04.22",
   },
 ];
 
-const CustomTable: React.FC = () => <Table columns={columns} dataSource={data} />;
+const CustomTable: React.FC = () => (
+  <Table columns={columns} dataSource={data} />
+);
 
 export default CustomTable;

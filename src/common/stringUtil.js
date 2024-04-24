@@ -1,5 +1,3 @@
-export default {};
-
 /** *****************************
  * 데이터를 trim()한 뒤, 빈 값인지 확인
  * 
@@ -8,12 +6,12 @@ export default {};
  -------------------------------
  사용예시.
  isEmpty("") -> true
- ******************************* */ 
+ ******************************* */
 function isEmpty(input) {
-   const data = input.trim();
-   let check = (data == "" || data == null || data == undefined)? true : false;
+  const data = input.trim();
+  let check = data == "" || data == null || data == undefined ? true : false;
 
-   return check;
+  return check;
 }
 
 /** *****************************
@@ -27,17 +25,17 @@ function isEmpty(input) {
  사용예시.
  addStringLeft("123", 5, "*") -> **123
  addStringLeft("123", 1, "*") -> 123
- ******************************* */ 
+ ******************************* */
 function addStringLeft(data, len, str) {
-   let result = "";
+  let result = "";
 
-   let gap = len - data.length;
-   if(gap > 0) {
-      result += str.repeat(gap);
-   }
-   result += `${data}`
+  let gap = len - data.length;
+  if (gap > 0) {
+    result += str.repeat(gap);
+  }
+  result += `${data}`;
 
-   return result;
+  return result;
 }
 
 /** *****************************
@@ -51,14 +49,16 @@ function addStringLeft(data, len, str) {
  사용예시.
  addStringRight("123", 5, "*") -> 123**
  addStringRight("123", 1, "*") -> 123
- ******************************* */ 
+ ******************************* */
 function addStringRight(data, len, str) {
-   let result = `${data}`;
+  let result = `${data}`;
 
-   let gap = len - data.length;
-   if(gap > 0) {
-      result += str.repeat(gap);
-   }
+  let gap = len - data.length;
+  if (gap > 0) {
+    result += str.repeat(gap);
+  }
 
-   return result;
+  return result;
 }
+
+export default { addStringLeft, addStringRight, isEmpty };
