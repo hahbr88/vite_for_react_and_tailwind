@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Table, Tag } from "antd";
 import type { TableProps } from "antd";
 import dateUtil from "../common/dateUtil";
@@ -90,7 +90,7 @@ function CustomBirth({birth}) {
 // - title: 열의 제목
 // - dataIndex: 열 데이터의 키
 // - key: 열의 고유 키
-// - render: 열 데이터를 어떻게 렌더링할지를 정의
+// - render: 열 데이터를 어떻게 렌더링할 지 정의
 const columns: TableProps<DataType>["columns"] = [
   {
     title: "이름",
@@ -101,14 +101,32 @@ const columns: TableProps<DataType>["columns"] = [
     title: "생년월일",
     dataIndex: "birth",
     key: "birth",
-    //일반함수 매개변수는 변수! 선언한 매개변수 타입에 맞게 넣어주면 된다.
+    // 일반함수/컴포넌트 매개변수 표현차 이해 중요!
+    // - 일반함수는 매개변수나 인자로 변수를 받을 때, JS 문법을 따름 --> 변수명
+    // - 컴포넌트의 매개변수나 인자를 변수를 받을 때, JSX 문법을 따름 --> {변수명}
+    //   --> 이유 : 컴포넌트는 props라는 객체를 통해 인자를 전달받기 때문!
+    //   --> 이유 : JS 문법에서 객체는 {}를 사용해서 나타냄
     render: (text) => calcAgeColumns(text),
   },
   {
     title: "기술등급",
     dataIndex: "skGrade",
     key: "skGrade",
-    //컴포넌트 매개변수는 객체! {}를 사용하면 객체가 된다.
+    /* ---------------------------------------------------------
+     컴포넌트는 props를 통해 인자를 전달받음 (props는 객체)
+     = props에 값을 넣으면 컴포넌트의 인자로 맵핑(연결)됨
+     -----------------------------------------------------------
+     위 설명 자세히...
+     props는 html의 attribute와 비슷하게 생김; 비슷하게 사용하면 됨
+     - ex. <button type="submit" /> -> 태그명 : button
+                                    -> 속성(attribute) : type
+                                    -> 속성값(attribute value) : submit
+     - ex. <compoName propsKey=value /> -> 컴포넌트명 : compoName
+                                        -> props의 key : propsKey
+                                        -> props의 값 : value
+    따라서 props의 값에 변수를 사용하고 싶으면 JSX 문법을 따라 {변수명} 사용
+    그러면 해당 컴포넌트의 인자로 props의 값이 넘어감
+    --------------------------------------------------------- */ 
     render: (text) => <CustomTag skGrade={text} />,
   },
   {
@@ -128,7 +146,7 @@ const columns: TableProps<DataType>["columns"] = [
   },
   {
     title: "",
-    dataIndex: "updInfo",
+    dataIndex: "updInfo", // dataIndex에 적은 객체key에 따라 text 내용 결정 (record, index는 이와 무관)
     key: "updInfo",
     render: (text, record, index) => (
       <div>
@@ -138,6 +156,7 @@ const columns: TableProps<DataType>["columns"] = [
     /* ----------------------------------------------------------------------------- 
     render: function(text, record, index) => {}     (뇌피셜)
     - text: string   <-- 데이터
+                         : dataIndex의 값에 따라 text 내용 결정
     - record: object <-- antd의 Table 컴포넌트에서 dataSource property를 row 단위로 가져옴 (그게 일반적으로, object)
                          : 일반적으로 dataSource에 배열을 넣기 때문에, record로 값을 가져올 때 dataSource의 인덱스 단위로 가져옴
                            위 예제에서 dataSource의 props는 data: DataType[] 였기 때문에, record에는 DataType 객체가 들어옴
