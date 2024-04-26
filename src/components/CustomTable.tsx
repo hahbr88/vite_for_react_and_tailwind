@@ -3,6 +3,7 @@ import { Table, Tag } from "antd";
 import type { TableProps } from "antd";
 import dateUtil from "../common/dateUtil";
 import stringUtil from "../common/stringUtil";
+import CustomTag from './custom-tag';
 
 interface DataType {
   key: number;
@@ -30,29 +31,29 @@ interface DataType {
 ------------------------------------------------------------------------------ */
 
 // 컴포넌트의 props는 객체다. <-- DataType 객체를 구조 분해 할당한 변수
-function CustomTag({ skGrade }) {
-  const [color, setColor] = useState("");
-  useEffect(() => {
-    if (skGrade === "초급") {
-      setColor("green");
-    } else if (skGrade === "중급") {
-      setColor("geekblue");
-    } else if (skGrade === "고급") {
-      setColor("gold");
-    } else if (skGrade === "특급") {
-      setColor("magenta");
-    }
-  }, [skGrade]);
-  return (
-    <Tag color={color} key={skGrade}>
-      {skGrade}
-    </Tag>
-  );
-}
+// function CustomTag({ skGrade }) {
+//   const [color, setColor] = useState("");
+//   useEffect(() => {
+//     if (skGrade === "초급") {
+//       setColor("green");
+//     } else if (skGrade === "중급") {
+//       setColor("geekblue");
+//     } else if (skGrade === "고급") {
+//       setColor("gold");
+//     } else if (skGrade === "특급") {
+//       setColor("magenta");
+//     }
+//   }, [skGrade]);
+//   return (
+//     <Tag color={color} key={skGrade}>
+//       {skGrade}
+//     </Tag>
+//   );
+// }
 
 // 일반 함수의 매개변수는 일반 변수를 쓴다.
 const calcAgeColumns = (birth) => {
-  if(stringUtil.isEmpty(birth)) {
+  if (stringUtil.isEmpty(birth)) {
     return "-";
   }
   // 오늘 날짜 구하기
@@ -129,7 +130,11 @@ const columns: TableProps<DataType>["columns"] = [
     title: "",
     dataIndex: "updInfo",
     key: "updInfo",
-    render: (text, record, index) => <div>{text} <a style={{color: "blue"}}>{Object.values(record)}</a> {index}</div>,
+    render: (text, record, index) => (
+      <div>
+        {text} <a style={{ color: "blue" }}>{Object.values(record)}</a> {index}
+      </div>
+    ),
     /* ----------------------------------------------------------------------------- 
     render: function(text, record, index) => {}     (뇌피셜)
     - text: string   <-- 데이터
@@ -152,7 +157,8 @@ const data: DataType[] = [
     birth: "20161123",
     skGrade: "특급",
     role: "개발",
-    skill: "Java, C, ProC, 웹스퀘어, JQuery, Oracle, mySQL, IBM DB2, Spring, BMX",
+    skill:
+      "Java, C, ProC, 웹스퀘어, JQuery, Oracle, mySQL, IBM DB2, Spring, BMX",
     updInfo: "홍길동/2024.04.22",
   },
   {
@@ -161,7 +167,8 @@ const data: DataType[] = [
     birth: "20200426",
     skGrade: "특급",
     role: "개발",
-    skill: "Java, C, ProC, 웹스퀘어, JQuery, Oracle, mySQL, IBM DB2, Spring, BMX",
+    skill:
+      "Java, C, ProC, 웹스퀘어, JQuery, Oracle, mySQL, IBM DB2, Spring, BMX",
     updInfo: "홍길동/2024.04.22",
   },
   {
@@ -170,7 +177,8 @@ const data: DataType[] = [
     birth: "19990101",
     skGrade: "특급",
     role: "PL",
-    skill: "Java, C, ProC, 웹스퀘어, JQuery, Oracle, mySQL, IBM DB2, Spring, BMX",
+    skill:
+      "Java, C, ProC, 웹스퀘어, JQuery, Oracle, mySQL, IBM DB2, Spring, BMX",
     updInfo: "홍길동/2024.04.22",
   },
   {
