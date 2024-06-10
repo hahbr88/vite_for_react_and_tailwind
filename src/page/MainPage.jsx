@@ -2,7 +2,7 @@ import { Button } from "antd";
 import Counter from "../components/counter";
 import { NavLink } from "react-router-dom";
 import ParentdCompo from '../components/ParentCompo';
-import App3 from "../App3";
+import AntdTable from "../components/AntdTable";
 
 function MainPage() {
   // const router = Router();
@@ -15,7 +15,7 @@ function MainPage() {
       <NavLink to={"/table"}>
         <Button>페이지 전환</Button>
       </NavLink>
-      <App3 />
+      <AntdTable />
     </div>
   );
 }
